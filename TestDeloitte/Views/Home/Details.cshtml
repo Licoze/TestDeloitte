@@ -1,0 +1,25 @@
+﻿@model UserDetailsModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+<h3>Hi @User.Identity.Name,</h3>
+@if (Model != null)
+{
+    <div class="user-details-general">
+        <div class="photo">
+            <img src="/@Model.Picture" alt="Picture" />
+        </div>
+        <div>
+            <h4>@Model.Name, @Model.Gender</h4>
+            <p>@Model.Company</p>
+            <p>@Model.Email</p>
+            <p>@Model.Phone</p>
+            <p>@Model.Address</p>
+        </div>
+    </div>
+    <p>@Model.About</p>
+    <p>@string.Join(",", Model.Tags)</p>
+}

@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TestDeloitte.Areas.Identity.Data
+@model List<UserModel>
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Tags</th>
+            </tr>
+            @if (Model != null)
+            {
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td><a asp-controller="Home" asp-action="Details" asp-route-guid="@user.Guid">@user.Name</a></td>
+                        <td>@user.Company</td>
+                        <td>@user.Email</td>
+                        <td>@user.Phone</td>
+                        <td>
+                            @for (int i = 0; i < user.Tags.Count; i++)
+                            {
+                                <a asp-controller="Home" asp-action="Index" asp-route-tag="@user.Tags[i]">@user.Tags[i]</a>
+                                if (i != user.Tags.Count - 1)
+                                {
+                                    @Html.Raw(",");
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+    }
+    else
+    {
+        <p>Please login to see more</p>
+    }
+
+</div>
